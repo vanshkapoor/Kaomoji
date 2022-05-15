@@ -13,12 +13,12 @@ const Question =()=>{
 }
 
 const Counter=()=>{
-    return  <Container  maxW='900px' padding="2">
-    <Flex>
-        <Spacer/>
-        <Text>1/12</Text>
-    </Flex>
-</Container>
+    return <Container  maxW='900px' padding="2">
+        <Flex>
+            <Spacer/>
+            <Text>1/12</Text>
+        </Flex>
+    </Container>
 }
 
 const ScoreAndTimeDiv=()=>{
@@ -29,13 +29,13 @@ const ScoreAndTimeDiv=()=>{
         <Spacer/>
         <Text>SCORE: 5</Text>
     </Flex>
-</Container>
-<Container maxW='900px' textAlign="initial" padding="2">
-<Button colorScheme='teal' size='sm' >
-    Need hint?
-  </Button>
-</Container>
-</>
+    </Container>
+        <Container maxW='900px' textAlign="initial" padding="2">
+        <Button colorScheme='teal' size='sm' >
+            Need hint?
+        </Button>
+        </Container>
+    </>
 }
 
 export default Question;
