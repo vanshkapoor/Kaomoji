@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Questionaire from './Pages/Questionaire';
 import GameHome from './Pages/GameHome';
 
+
 function App() {
   return (
    <BrowserRouter>

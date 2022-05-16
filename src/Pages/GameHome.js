@@ -1,9 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../Components/Navbar'
 import { Flex, Text } from '@chakra-ui/layout'
 import { Container, Box, Slider, SliderTrack, SliderThumb, SliderFilledTrack, Button } from '@chakra-ui/react'
+// import app from "../firebase";
+import * as FireService from "../firebase"
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 const GameHome=()=>{
+
+    useEffect(()=>{
+        const qnRef =  collection(FireService.db, "questions")
+        getDocs(qnRef).then(resp => {
+            console.log(resp.docs.map(docSnapshot => docSnapshot.data()));
+        }).catch(error => {
+            console.log(error)
+        })
+    }, [])
+
+
+
     return <div className="App">
         <Navbar />
         <br />
@@ -15,18 +30,9 @@ const GameHome=()=>{
             </Text>
             <br />
             <Flex gap="8" style={{overflow:'auto'}}>
-                <Box  borderWidth='1px' borderRadius='lg' textAlign="center" padding="20" bgColor="gray.100">
-                    <h1 style={{fontSize:'3rem'}}>🎵</h1>
-                    <Text fontSize="2xl">Songs</Text>
-                </Box>
-                <Box maxW='sm' borderWidth='1px' borderRadius='lg' textAlign="center" padding="20" bgColor="gray.100">
-                    <h1 style={{fontSize:'3rem'}}>🎥</h1>
-                    <Text fontSize="2xl">Movies</Text>
-                </Box>
-                <Box maxW='sm' borderWidth='1px' borderRadius='lg' textAlign="center" padding="20" bgColor="gray.100">
-                    <h1 style={{fontSize:'3rem'}}>❓</h1>
-                    <Text fontSize="2xl">Random</Text>
-                </Box>
+                <TypeBox type="Songs" emoji="🎵"/>
+                <TypeBox type="Movies" emoji="🎥"/>
+                <TypeBox type="Random" emoji="❓"/>
             </Flex>
             <br />
             <br />
@@ -59,6 +65,14 @@ const GameHome=()=>{
            
         </Container>      
     </div>
+}
+
+
+const TypeBox =(params)=>{
+    return <Box  borderWidth='1px' borderRadius='lg' textAlign="center" padding="20" bgColor="gray.100">
+                    <h1 style={{fontSize:'3rem'}}>{params.emoji}</h1>
+                    <Text fontSize="2xl">{params.type}</Text>
+                </Box>
 }
 
 export default GameHome
