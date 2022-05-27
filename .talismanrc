@@ -1,3 +1,7 @@
 fileignoreconfig:
 - filename: package-lock.json
   checksum: c796915369b8802b0bac3b4ed7a2e875c976f06779a26a4ca3ea8d2f0d910942
+- filename: src/firebase.js
+  checksum: 04b78f120739cae8875bfe99141ddf8c750826e1be87ff505cfe62b9160c9445
+- filename: package-lock.json
+  checksum: 14c7e2b5573d95e64d79b83b9d9bfafcc2ff59bc8502da6c01d7deeb57afea97
