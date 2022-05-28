@@ -13,6 +13,7 @@ const GameHome=()=>{
     const [start, setStart] = useState(false)
 
     useEffect(()=>{
+
         const qnRef =  collection(FireService.db, "questions")
         getDocs(qnRef).then(resp => {
             console.log(resp.docs.map(docSnapshot => docSnapshot.data()));
@@ -28,7 +29,7 @@ const GameHome=()=>{
             return;
         }
         setGameType(true)
-        window.location.href = "/play/1/2"
+        window.location.href = `/play/${gameType}/${gameLevel}`
         
     }
 
