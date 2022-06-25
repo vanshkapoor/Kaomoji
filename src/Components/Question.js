@@ -1,17 +1,32 @@
 import React from 'react'
+import { Link } from "react-router-dom";
 import { Flex, Spacer, Button, Text, Container } from '@chakra-ui/react'
 
-const Question =()=>{
+const Question =({id, index, arr})=>{
     return <div>
         <br />
+        {index == 6?<>
+        <Container textAlign="center">
+            <h1><b>GAME OVER!!</b></h1>
+            <br />
+            <Link to="/">
+                <Button colorScheme='purple' size='lg' width="250px">
+                    New game
+                </Button>    
+            </Link>  
+        </Container>
+        </>:
+        <>
         <Counter/>
         <Container bg='gray.200' maxW='900px' padding="20" centerContent>
-                <h1 style={{fontSize:'4rem'}}>🐣</h1>
-        </Container>    
-        <ScoreAndTimeDiv/>   
+            <h1 style={{fontSize:'4rem'}}>🐣 {arr[index]}</h1>
+        </Container>
+        <ScoreAndTimeDiv/>
+        </>
+        }                
     </div>
 }
-
+ 
 const Counter=()=>{
     return <Container  maxW='900px' padding="2">
         <Flex>
@@ -34,7 +49,7 @@ const ScoreAndTimeDiv=()=>{
         <Button colorScheme='teal' size='sm' >
             Need hint?
         </Button>
-        </Container>
+    </Container>
     </>
 }
 

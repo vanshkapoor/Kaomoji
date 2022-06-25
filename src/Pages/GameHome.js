@@ -5,21 +5,35 @@ import { Flex, Text } from '@chakra-ui/layout'
 import { Container, Box, Slider, SliderTrack, SliderThumb, SliderFilledTrack, Button, Link } from '@chakra-ui/react'
 // import app from "../firebase";
 import * as FireService from "../firebase"
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
 
 const GameHome=()=>{
     const [gameType, setGameType] = useState(null)
     const [gameLevel, setGameLevel] = useState(3)
     const [start, setStart] = useState(false)
+    const [qarr,setQarr] = useState([])
+
+    async function fetchResp(){
+        const qnRef =  collection(FireService.db, "questions")
+        const quer = query(qnRef, where("level", "==", 1), where("type", "==",  gameType), limit(3))
+        const Snap = await getDocs(quer)      
+    
+        Snap.forEach(obj => {
+        //   console.log(obj.data())
+          setQarr(qarr.push(obj.data()))
+        })
+
+        console.log(qarr)     
+        localStorage.setItem("qns", qarr);  
+      }
 
     useEffect(()=>{
-
-        const qnRef =  collection(FireService.db, "questions")
-        getDocs(qnRef).then(resp => {
-            console.log(resp.docs.map(docSnapshot => docSnapshot.data()));
-        }).catch(error => {
-            console.log(error)
-        })
+        // const qnRef =  collection(FireService.db, "questions")
+        // getDocs(qnRef).then(resp => {
+        //     console.log(resp.docs.map(docSnapshot => docSnapshot.data()));
+        // }).catch(error => {
+        //     console.log(error)
+        // })
     }, [])
 
     const StartGame=()=>{
@@ -28,9 +42,11 @@ const GameHome=()=>{
             alert("select game type")
             return;
         }
-        setGameType(true)
-        window.location.href = `/play/${gameType}/${gameLevel}`
+        // setGameType(true)
+        console.log(gameType)
+        fetchResp()        
         
+        window.location.href = `/play/${gameType}/${gameLevel}`
     }
 
     return <div className="App">
@@ -44,9 +60,9 @@ const GameHome=()=>{
             </Text>
             <br />
             <Flex gap="8" style={{overflow:'auto'}}>
-                <TypeBox type="Songs" emoji="🎵" isActive={gameType==0?true:false} onClickFn={() => setGameType(0)} />
-                <TypeBox type="Movies" emoji="🎥" isActive={gameType==1?true:false} onClickFn={() => setGameType(1)} />
-                <TypeBox type="Random" emoji="❓" isActive={gameType==2?true:false} onClickFn={() => setGameType(2)} />
+                <TypeBox type="Songs" emoji="🎵" isActive={gameType=="music"?true:false} onClickFn={() => setGameType("music")} />
+                <TypeBox type="Movies" emoji="🎥" isActive={gameType=="movie"?true:false} onClickFn={() => setGameType("movie")} />
+                <TypeBox type="Random" emoji="❓" isActive={gameType=="random"?true:false} onClickFn={() => setGameType("random")} />
             </Flex>
             <br />
             <br />
