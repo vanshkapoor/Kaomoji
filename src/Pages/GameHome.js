@@ -13,19 +13,19 @@ const GameHome=()=>{
     const [start, setStart] = useState(false)
     const [qarr,setQarr] = useState([])
 
-    async function fetchResp(){
-        const qnRef =  collection(FireService.db, "questions")
-        const quer = query(qnRef, where("level", "==", 1), where("type", "==",  gameType), limit(3))
-        const Snap = await getDocs(quer)      
+    // async function fetchResp(){
+    //     const qnRef =  collection(FireService.db, "questions")
+    //     const quer = query(qnRef, where("level", "==", 1), where("type", "==",  gameType), limit(3))
+    //     const Snap = await getDocs(quer)      
     
-        Snap.forEach(obj => {
-        //   console.log(obj.data())
-          setQarr(qarr.push(obj.data()))
-        })
+    //     Snap.forEach(obj => {
+    //     //   console.log(obj.data())
+    //       setQarr(qarr.push(obj.data()))
+    //     })
 
-        console.log(qarr)     
-        localStorage.setItem("qns", qarr);  
-      }
+    //     console.log(qarr)     
+    //     localStorage.setItem("qns", qarr);  
+    //   }
 
     useEffect(()=>{
         // const qnRef =  collection(FireService.db, "questions")
@@ -44,7 +44,7 @@ const GameHome=()=>{
         }
         // setGameType(true)
         console.log(gameType)
-        fetchResp()        
+        // fetchResp()        
         
         window.location.href = `/play/${gameType}/${gameLevel}`
     }

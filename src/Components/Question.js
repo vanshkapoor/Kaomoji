@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import { Flex, Spacer, Button, Text, Container } from '@chakra-ui/react'
+import { Flex, Spacer, Button, Text, Container, Tooltip } from '@chakra-ui/react'
 
-const Question =({id, index, arr})=>{
+const Question =({id, index, arr, questionArr})=>{
     return <div>
         <br />
-        {index == 6?<>
+        {index == 3?<>
         <Container textAlign="center">
             <h1><b>GAME OVER!!</b></h1>
             <br />
@@ -19,9 +19,9 @@ const Question =({id, index, arr})=>{
         <>
         <Counter/>
         <Container bg='gray.200' maxW='900px' padding="20" centerContent>
-            <h1 style={{fontSize:'4rem'}}>🐣 {arr[index]}</h1>
+            <h1 style={{fontSize:'4rem'}}>{questionArr.question}</h1>
         </Container>
-        <ScoreAndTimeDiv/>
+        <ScoreAndTimeDiv hint={questionArr.hint}/>
         </>
         }                
     </div>
@@ -36,7 +36,7 @@ const Counter=()=>{
     </Container>
 }
 
-const ScoreAndTimeDiv=()=>{
+const ScoreAndTimeDiv=({hint})=>{
     return  <>
     <Container maxW='900px' padding="2">
     <Flex>
@@ -46,9 +46,11 @@ const ScoreAndTimeDiv=()=>{
     </Flex>
     </Container>
         <Container maxW='900px' textAlign="initial" padding="2">
+        <Tooltip label={hint} aria-label='A tooltip'>
         <Button colorScheme='teal' size='sm' >
             Need hint?
         </Button>
+        </Tooltip>        
     </Container>
     </>
 }
