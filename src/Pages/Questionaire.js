@@ -6,10 +6,11 @@ import {
   useParams
 } from "react-router-dom";
 import * as FireService from "../firebase";
-import { Button, Container,Input } from '@chakra-ui/react'
+import { Button,Box, Container,Flex,Input, Spacer } from '@chakra-ui/react'
 import { getFirestore, collection, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
 
 function Questionaire() {
+  const [score, setScore] = useState(0)
   const [arr, setArr] = useState([])
   const [qarr, setQarr] = useState([])
   const [ind, setInd] = useState(0)
@@ -18,7 +19,39 @@ function Questionaire() {
   const [len, setLen]=useState(0)
   const [ans, setAns] = useState("")
   const [validate, setValidate] = useState(null)
+  const [cnt, setCnt] = useState(14)
   let { type } = useParams();    
+
+
+  const startTimer = () => {       
+      if(cnt>0){
+          setCnt(cnt => cnt-0.5)
+      }else{
+      }
+  }
+
+
+
+  useEffect(()=>{          
+    let ignore = false;
+    let i = 1
+    var subarr = []
+    while(subarr.length<3)
+    {
+      var r = Math.floor((Math.random() * 4) + 1);
+      if(!ignore)
+      {
+        if(subarr.indexOf(r) == -1) subarr.push(r)      
+      }
+    }
+    console.log(subarr)
+    setArr(subarr)
+    fetchResp(type, arr)    //firebase                 
+    setLoading(false)   
+    setInterval(startTimer, 1000)     
+  }, [])
+
+
 
   async function fetchResp(type, arr){ //firebase
     console.log(arr)
@@ -35,79 +68,102 @@ function Questionaire() {
     })   
   }  
 
-  useEffect(()=>{          
-    var subarr = []
-    while(subarr.length<3)
+
+
+
+  const updateIndexAndValidate=(e)=>{    
+    e.preventDefault()
+    if(ans.length<1)
     {
-      var r = Math.floor((Math.random() * 4) + 1);
-      if(subarr.indexOf(r) == -1) subarr.push(r)      
+      alert("Value can't be empty!")
+      return
     }
-    setArr(subarr)
-
-    fetchResp(type, arr)    //firebase        
-    setLoading(false)
-  }, [])
-
-  const updateIndexAndValidate=()=>{    
     setAns("")
     if(qarr[arr[ind]].answer == ans)
-    {
-      
+    {      
       setValidate(true)
+      setScore(score => score+5)
     }else{
       setValidate(false)
     }        
   }
 
+
+
   const updateIndex=()=>{
     setValidate(null)
+    setAns("")
     setInd(ind+1)
+    setCnt(14)
   }
+
+
 
     return loading == true || qarr.length<4? <p>loading</p>:<div>
       <div className="App">
-        {console.log(qarr)}
+        {/* {console.log(qarr)} */}
         <Navbar />        
             <div >              
-              {<Question index={ind} arr={arr} questionArr={qarr[arr[ind]]}/>}
+              {<Question index={ind} arr={arr} questionArr={qarr[arr[ind]]} score={score} countdown={cnt}/>}
             </div>          
         <br />
         {ind<3?
         <>
-        <Container>
-        <br />
-        <Input placeholder='Enter your answer' 
-        _placeholder={{ opacity: 1, color: '#5C79E0' }}
-        onChange={e => setAns(e.target.value)}
-        size="lg"
-        />
-        </Container>
-        <br />
-        <Container textAlign="center">
-          <Button colorScheme='blue' size='lg' onClick={updateIndexAndValidate} disabled={ind==3}>
-              Submit
-          </Button>
-        </Container>
+        <form onSubmit={updateIndexAndValidate}>
+          <Container>
+          <br />        
+          <p>Answer length : <b style={{color:qarr[arr[ind]].answer.length < ans.length?'red':'blue'  }}>{qarr[arr[ind]].answer.length}</b></p>
+          <Input placeholder='Enter your answer' 
+          border="3px solid black"
+          style={{fontWeight:'bold'}}
+          _placeholder={{ opacity: 1, color: '#00000' }}
+          onChange={e => setAns(e.target.value)} 
+          value={ans}
+          size="lg"
+          />
+          </Container>
+          <br />
+          <Container textAlign="center">
+            <Button colorScheme='blue' size='lg' disabled={ind==3} type="submit">
+                Submit
+            </Button>
+          </Container>
+        </form>
         <br />
         {
           validate==true?
           <div>
-            <Container backgroundColor="green">
-              <p>Correct Answer</p>
-              <Button colorScheme='white' size='lg' onClick={updateIndex} disabled={ind==3}>
+            <Container backgroundColor="green.400" maxW='900px' padding="2"  borderRadius="6px">
+            <Flex padding="2">
+              <p style={{color:'white', fontWeight:'bold', fontSize:'1.2rem'}}>Correct Answer</p>
+              <Spacer/>
+              <Button colorScheme='green' size='sm' onClick={updateIndex} disabled={ind==3}>
                 NEXT
               </Button>
+            </Flex>     
             </Container>
           </div>:<></>
         }
         {
           validate == false?
           <div>
-            <Container backgroundColor="red">
-            <p>InCorrect Answer</p>
-              <Button colorScheme='white' size='sm' onClick={updateIndex} disabled={ind==3}>
-                NEXT
-              </Button>
+            <Container backgroundColor="red.400" maxW='900px' padding="2"  borderRadius="6px">
+              <Box>
+              <Flex padding="2">
+                <Box>
+                  <Box>
+                    <p style={{color:'white', fontWeight:'bold', fontSize:'1.2rem'}}>In-Correct Answer</p>
+                  </Box>
+                  <Box>
+                    <p style={{color:'white', fontWeight:'bold', fontSize:'1rem'}}>Correct answer is : {qarr[arr[ind]].answer}</p>
+                  </Box>
+                </Box>
+                <Spacer/>
+                <Button colorScheme='red' size='md' onClick={updateIndex} disabled={ind==3}>
+                  NEXT
+                </Button>
+              </Flex>        
+              </Box>
             </Container>
           </div>:<></>
         }

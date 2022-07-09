@@ -32,7 +32,7 @@ const GameHome=()=>{
         // getDocs(qnRef).then(resp => {
         //     console.log(resp.docs.map(docSnapshot => docSnapshot.data()));
         // }).catch(error => {
-        //     console.log(error)
+            console.log("error")
         // })
     }, [])
 
@@ -85,8 +85,8 @@ const GameHome=()=>{
             <br />
             <br />
 
-            <Button colorScheme='purple' size='lg' width="250px" onClick={() => StartGame()}>
-                Start the Game
+            <Button colorScheme='purple' size='lg' width="350px" onClick={() => StartGame()}>
+                START THE GAME
             </Button>            
             <br />
             <br />
