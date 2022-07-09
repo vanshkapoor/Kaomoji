@@ -1,2 +1,3 @@
 # Kaomoji
-The emoji fun time
+The emoji quiz game.
+Enabled with google analytics
