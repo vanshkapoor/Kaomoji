@@ -8,6 +8,7 @@ import {
 import * as FireService from "../firebase";
 import { Button,Box, Container,Flex,Input, Spacer } from '@chakra-ui/react'
 import { getFirestore, collection, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
+import ReactGA from "react-ga4";  
 
 function Questionaire() {
   const [qnlen, setQnlen] = useState(3)
@@ -45,10 +46,13 @@ function Questionaire() {
         if(subarr.indexOf(r) == -1) subarr.push(r)      
       }
     }
+
+    // ReactGA.initialize("G-4HLH8XDJX1");        
+    // ReactGA.send({ hitType: "pageview", page: window.location.pathname });
     setArr(subarr)
     fetchResp(type, arr)    //firebase                 
     setLoading(false)   
-    setInterval(startTimer, 1000)     
+    setInterval(startTimer, 1000)         
   }, [])
 
 

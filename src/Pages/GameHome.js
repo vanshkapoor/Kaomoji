@@ -8,7 +8,7 @@ import * as FireService from "../firebase"
 import img1 from "../assets/1.png"
 import img2 from "../assets/2.png"
 import img3 from "../assets/3.png"
-import ReactGA from 'react-ga';
+import ReactGA from "react-ga4";
 
 import { collection, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
 
@@ -20,8 +20,10 @@ const GameHome=()=>{
     const navigate = useNavigate();
 
     useEffect(() => {
-        ReactGA.initialize('G-58V8GVRTHJ');
-        ReactGA.pageview(window.location.pathname + window.location.search);
+        ReactGA.initialize("G-4HLH8XDJX1");        
+        ReactGA.send({ hitType: "pageview", page: window.location.pathname });
+     
+
     }, [])
 
     const StartGame=()=>{
@@ -31,6 +33,13 @@ const GameHome=()=>{
             alert("select game type")
             return;
         }
+        ReactGA.event({
+            category: gameType,
+            action: "Click game start",
+            value: gameType, // optional, must be a number
+            nonInteraction: false, // optional, true/false
+            transport: "xhr", // optional, beacon/xhr/image
+          });
         navigate(`/play/${gameType}/${gameLevel}`)
     }
 
