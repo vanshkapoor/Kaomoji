@@ -26,7 +26,7 @@ function Questionaire() {
 
   const startTimer = () => {       
       if(cnt>0){
-          setCnt(cnt => cnt-0.5)
+          setCnt(cnt => cnt-1)
       }else{
       }
   }
