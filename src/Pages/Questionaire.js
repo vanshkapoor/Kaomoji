@@ -10,6 +10,7 @@ import { Button,Box, Container,Flex,Input, Spacer } from '@chakra-ui/react'
 import { getFirestore, collection, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
 
 function Questionaire() {
+  const [qnlen, setQnlen] = useState(3)
   const [score, setScore] = useState(0)
   const [arr, setArr] = useState([])
   const [qarr, setQarr] = useState([])
@@ -19,7 +20,7 @@ function Questionaire() {
   const [len, setLen]=useState(0)
   const [ans, setAns] = useState("")
   const [validate, setValidate] = useState(null)
-  const [cnt, setCnt] = useState(14)
+  const [cnt, setCnt] = useState(60)
   let { type } = useParams();    
 
 
@@ -36,7 +37,7 @@ function Questionaire() {
     let ignore = false;
     let i = 1
     var subarr = []
-    while(subarr.length<3)
+    while(subarr.length<qnlen)
     {
       var r = Math.floor((Math.random() * 4) + 1);
       if(!ignore)
@@ -44,7 +45,6 @@ function Questionaire() {
         if(subarr.indexOf(r) == -1) subarr.push(r)      
       }
     }
-    console.log(subarr)
     setArr(subarr)
     fetchResp(type, arr)    //firebase                 
     setLoading(false)   
@@ -54,8 +54,6 @@ function Questionaire() {
 
 
   async function fetchResp(type, arr){ //firebase
-    console.log(arr)
-    
     const qnRef =  collection(FireService.db, type)
     const quer = query(qnRef, limit(4))
     const Snap = await getDocs(quer)          
@@ -85,6 +83,7 @@ function Questionaire() {
       setScore(score => score+5)
     }else{
       setValidate(false)
+      setScore(score => score-1)
     }        
   }
 
@@ -104,7 +103,7 @@ function Questionaire() {
         {/* {console.log(qarr)} */}
         <Navbar />        
             <div >              
-              {<Question index={ind} arr={arr} questionArr={qarr[arr[ind]]} score={score} countdown={cnt}/>}
+              {<Question index={ind} arr={arr} questionArr={qarr[arr[ind]]} score={score} countdown={cnt} qnlen={qnlen} />}
             </div>          
         <br />
         {ind<3?

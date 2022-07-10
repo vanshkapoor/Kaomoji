@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../Components/Navbar'
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Flex, Text } from '@chakra-ui/layout'
 import { Container, Box, Slider, SliderTrack, SliderThumb, SliderFilledTrack, Button, Link } from '@chakra-ui/react'
 // import app from "../firebase";
@@ -12,41 +12,17 @@ const GameHome=()=>{
     const [gameLevel, setGameLevel] = useState(3)
     const [start, setStart] = useState(false)
     const [qarr,setQarr] = useState([])
-
-    // async function fetchResp(){
-    //     const qnRef =  collection(FireService.db, "questions")
-    //     const quer = query(qnRef, where("level", "==", 1), where("type", "==",  gameType), limit(3))
-    //     const Snap = await getDocs(quer)      
-    
-    //     Snap.forEach(obj => {
-    //     //   console.log(obj.data())
-    //       setQarr(qarr.push(obj.data()))
-    //     })
-
-    //     console.log(qarr)     
-    //     localStorage.setItem("qns", qarr);  
-    //   }
-
-    useEffect(()=>{
-        // const qnRef =  collection(FireService.db, "questions")
-        // getDocs(qnRef).then(resp => {
-        //     console.log(resp.docs.map(docSnapshot => docSnapshot.data()));
-        // }).catch(error => {
-            console.log("error")
-        // })
-    }, [])
+    const navigate = useNavigate();
 
     const StartGame=()=>{
+        
         if(gameType == null)
         {
             alert("select game type")
             return;
         }
-        // setGameType(true)
         console.log(gameType)
-        // fetchResp()        
-        
-        window.location.href = `/play/${gameType}/${gameLevel}`
+        navigate(`/play/${gameType}/${gameLevel}`)
     }
 
     return <div className="App">
