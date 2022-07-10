@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../Components/Navbar'
 import { Navigate, useNavigate } from "react-router-dom";
 import { Flex, Text } from '@chakra-ui/layout'
-import { Container, Box, Slider, SliderTrack, SliderThumb, SliderFilledTrack, Button, Link } from '@chakra-ui/react'
+import { Container, Box, Slider, SliderTrack, SliderThumb, SliderFilledTrack, Button, Link, Image } from '@chakra-ui/react'
 // import app from "../firebase";
 import * as FireService from "../firebase"
+import img1 from "../assets/1.png"
+import img2 from "../assets/2.png"
+import img3 from "../assets/3.png"
+
 import { collection, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
 
 const GameHome=()=>{
@@ -21,7 +25,6 @@ const GameHome=()=>{
             alert("select game type")
             return;
         }
-        console.log(gameType)
         navigate(`/play/${gameType}/${gameLevel}`)
     }
 
@@ -36,9 +39,12 @@ const GameHome=()=>{
             </Text>
             <br />
             <Flex gap="8" style={{overflow:'auto'}}>
-                <TypeBox type="Songs" emoji="🎵" isActive={gameType=="music"?true:false} onClickFn={() => setGameType("music")} />
-                <TypeBox type="Movies" emoji="🎥" isActive={gameType=="movie"?true:false} onClickFn={() => setGameType("movie")} />
-                <TypeBox type="Random" emoji="❓" isActive={gameType=="random"?true:false} onClickFn={() => setGameType("random")} />
+                <Image src={img1} width="400px" height="250px" borderRadius='lg' border={gameType=="music"?"4px solid purple":""} cursor="pointer" onClick={() => setGameType("music")}/>
+                <Image src={img2} width="400px" height="250px" borderRadius='lg' border={gameType=="movie"?"4px solid purple":""} cursor="pointer" onClick={() => setGameType("movie")}/>
+                <Image src={img3} width="400px" height="250px" borderRadius='lg' border={gameType=="random"?"4px solid purple":""} cursor="pointer" onClick={() => setGameType("random")}/>
+                {/* <TypeBox type="Songs" emoji="🎵" isActive={gameType=="music"?true:false} onClickFn={() => setGameType("music")} /> */}
+                {/* <TypeBox type="Movies" emoji="🎥" isActive={gameType=="movie"?true:false} onClickFn={() => setGameType("movie")} /> */}
+                {/* <TypeBox type="Random" emoji="❓" isActive={gameType=="random"?true:false} onClickFn={() => setGameType("random")} /> */}
             </Flex>
             <br />
             <br />

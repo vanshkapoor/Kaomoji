@@ -93,7 +93,7 @@ function Questionaire() {
     setValidate(null)
     setAns("")
     setInd(ind+1)
-    setCnt(14)
+    setCnt(60)
   }
 
 
