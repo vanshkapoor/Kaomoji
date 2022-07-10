@@ -8,6 +8,7 @@ import * as FireService from "../firebase"
 import img1 from "../assets/1.png"
 import img2 from "../assets/2.png"
 import img3 from "../assets/3.png"
+import ReactGA from 'react-ga';
 
 import { collection, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
 
@@ -18,6 +19,11 @@ const GameHome=()=>{
     const [qarr,setQarr] = useState([])
     const navigate = useNavigate();
 
+    useEffect(() => {
+        ReactGA.initialize('G-58V8GVRTHJ');
+        ReactGA.pageview(window.location.pathname + window.location.search);
+    }, [])
+
     const StartGame=()=>{
         
         if(gameType == null)
@@ -27,6 +33,7 @@ const GameHome=()=>{
         }
         navigate(`/play/${gameType}/${gameLevel}`)
     }
+
 
     return <div className="App">
         <Navbar />
