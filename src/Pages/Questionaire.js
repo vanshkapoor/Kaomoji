@@ -106,7 +106,7 @@ function Questionaire() {
     return loading == true || qarr.length<4?  <p>loading</p>:    
     <div>
       <div className="App">
-        {console.log(qarr)}
+        {/* {console.log(qarr)} */}
         <Navbar />        
             <div >              
               {<Question index={ind} arr={arr} questionArr={qarr[arr[ind]]} score={score} countdown={cnt} qnlen={qnlen} />}
