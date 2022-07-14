@@ -60,7 +60,7 @@ function Questionaire() {
 
   async function fetchResp(type, arr){ //firebase
     const qnRef =  collection(FireService.db, type)
-    const quer = query(qnRef, limit(4))
+    const quer = query(qnRef, limit(6))
     const Snap = await getDocs(quer)          
 
     Snap.forEach(obj => {    
@@ -103,7 +103,8 @@ function Questionaire() {
 
 
 
-    return loading == true || qarr.length<4? <p>loading</p>:<div>
+    return loading == true || qarr.length<4?  <p>loading</p>:    
+    <div>
       <div className="App">
         {console.log(qarr)}
         <Navbar />        
