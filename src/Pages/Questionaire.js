@@ -40,12 +40,13 @@ function Questionaire() {
     var subarr = []
     while(subarr.length<qnlen)
     {
-      var r = Math.floor((Math.random() * 4) + 1);
+      var r = Math.floor((Math.random() * 6) + 1);
       if(!ignore)
       {
         if(subarr.indexOf(r) == -1) subarr.push(r)      
       }
     }
+    console.log(subarr)
 
     // ReactGA.initialize("G-4HLH8XDJX1");        
     // ReactGA.send({ hitType: "pageview", page: window.location.pathname });
@@ -104,7 +105,7 @@ function Questionaire() {
 
     return loading == true || qarr.length<4? <p>loading</p>:<div>
       <div className="App">
-        {/* {console.log(qarr)} */}
+        {console.log(qarr)}
         <Navbar />        
             <div >              
               {<Question index={ind} arr={arr} questionArr={qarr[arr[ind]]} score={score} countdown={cnt} qnlen={qnlen} />}
