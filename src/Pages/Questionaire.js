@@ -81,7 +81,7 @@ function Questionaire() {
       return
     }
     setAns("")
-    if(qarr[arr[ind]].answer == ans)
+    if(qarr[arr[ind]].answer.toLowerCase() == ans.toLowerCase())
     {      
       setValidate(true)
       setScore(score => score+5)
